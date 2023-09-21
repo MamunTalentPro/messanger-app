@@ -38,14 +38,14 @@ export function Messages(){
               </span>
             </div>
           </div>
-
+{/* 
           <img
             src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=144&h=144"
 
             alt="My profile"
 
             className="w-6 h-6 rounded-full order-1"
-          />
+          /> */}
 
 
         </div>
@@ -60,11 +60,15 @@ export function Messages(){
             </span>
           </div>
         </div>
-        <img
-           src="/profile.jpeg"
-          alt="My profile"
-          className="w-6 h-6 rounded-full order-2"
-        />
+        {
+
+          index == data?.length-1 &&  <img
+          src="/profile.jpeg"
+         alt="My profile"
+         className="w-6 h-6 rounded-full order-2"
+       />
+        }
+       
       </div>
     </div>
       })
