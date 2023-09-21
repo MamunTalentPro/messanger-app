@@ -3,14 +3,15 @@ import { sendMessage } from "@/store/apps/messenger";
 
 import UserNameModal from "@/components/common/modal";
 import { db } from '@/firestore';
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { addDoc, collection } from 'firebase/firestore';
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
-const dbInstance = collection(db, 'test');
+const dbInstance = collection(db, 'conversation');
 
 export default function Messenger(){
     const dispatch =useDispatch()
+    const registeredName =useSelector((state:any)=>state.messenger.profile?.name)
     const [message,setMessage]=useState("")
     const handleOnChange=(event:any)=>{
         setMessage(event.target.value)
@@ -35,34 +36,31 @@ export default function Messenger(){
     }
 
 
-    const [data, setData] = useState<any>([]);
-
-    useEffect(() => {
-      const unsubscribe = onSnapshot(dbInstance, (querySnapshot) => {
-        const newData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        console.log(newData)
-        setData(newData);
-      });
   
-      return () => {
-        // Unsubscribe from the Firestore listener when the component unmounts
-        unsubscribe();
-      };
-    }, []);
   
     const saveNote = async () => {
       try {
+       if( registeredName=="Mamun"){
         const docRef = await addDoc(dbInstance, {
-          message: message
+          sender: message
         });
-        console.log('🚀 Data added to Firestore with ID:', docRef.id);
+       }
+       else if( registeredName=="testUser"){
+        const docRef = await addDoc(dbInstance, {
+          receiver: message,
+          
+        });
+
+       }
+
+       
+
+       
       } catch (error) {
         console.error('Error adding data to Firestore:', error);
       }
     };
+
   
     return <>
     <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
@@ -83,9 +81,9 @@ export default function Messenger(){
           </div>
           <div className="flex flex-col leading-tight">
             <div className="text-2xl mt-1 flex items-center">
-              <span className="text-gray-700 mr-3">Mamun</span>
+              <span className="text-gray-700 mr-3">{registeredName!="Mamun"?"Mamun":"Test User"}</span>
             </div>
-            <span className="text-lg text-gray-600">Software Engineer</span>
+            <span className="text-lg text-gray-600">{registeredName!="Mamun"?"Software Engineer":"Testing User"}</span>
           </div>
         </div>
         <div className="flex items-center space-x-2">

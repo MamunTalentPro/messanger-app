@@ -1,14 +1,34 @@
-import { useSelector } from "react-redux"
+import { db } from '@/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+const dbInstance = collection(db, 'conversation');
 
 export function Messages(){
   const messages =useSelector((state:any)=>state?.messenger)
-  
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(dbInstance, (querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      
+      setData(newData);
+    });
+
+    return () => {
+      // Unsubscribe from the Firestore listener when the component unmounts
+      unsubscribe();
+    };
+  }, []);
     return   <div
     id="messages"
     className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
   >
     {
-      messages?.converSation?.map((chatRoom:any,index:number)=>{
+    data &&  data?.map((chatRoom:any,index:number)=>{
         return chatRoom?.sender ?  <div key={index} className="chat-message">
         <div className="flex items-end">
           <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
