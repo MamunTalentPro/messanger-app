@@ -42,7 +42,7 @@ export const messengerSlice = createSlice({
   initialState,
   reducers: {
     setProfile:(state,action)=>{
-      console.log("========",action.payload)
+    
       state.profile.name=action.payload;
 
     },
