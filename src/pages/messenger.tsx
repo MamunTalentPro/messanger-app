@@ -1,6 +1,7 @@
 import { Messages } from "@/components/Messages";
 import { sendMessage } from "@/store/apps/messenger";
 
+import UserNameModal from "@/components/common/modal";
 import { db } from '@/firestore';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
@@ -65,6 +66,7 @@ export default function Messenger(){
   
     return <>
     <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
+      <UserNameModal/>
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
         <div className="relative flex items-center space-x-4">
           <div className="relative">

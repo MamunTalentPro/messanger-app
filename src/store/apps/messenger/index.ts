@@ -15,7 +15,7 @@ export interface initialState {
 
 const initialState: initialState = {
   profile: {
-    name:"Mr. Mamun",
+    name:"Mr. Unknown",
     isActive:true,
   },
   converSation:[
@@ -42,7 +42,8 @@ export const messengerSlice = createSlice({
   initialState,
   reducers: {
     setProfile:(state,action)=>{
-      state.profile
+      console.log("========",action.payload)
+      state.profile.name=action.payload;
 
     },
     sendMessage:(state,action)=>{
