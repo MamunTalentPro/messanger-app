@@ -83,7 +83,7 @@ export default function Messenger(){
           </div>
           <div className="flex flex-col leading-tight">
             <div className="text-2xl mt-1 flex items-center">
-              <span className="text-gray-700 mr-3">Md.AL Mamun Mim</span>
+              <span className="text-gray-700 mr-3">Mamun</span>
             </div>
             <span className="text-lg text-gray-600">Software Engineer</span>
           </div>
