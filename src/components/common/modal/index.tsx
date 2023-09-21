@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Fragment, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Swal, { SweetAlertResult, TimerProgressBarStates } from 'sweetalert2'
+import Swal, { SweetAlertResult } from 'sweetalert2'
 export default function UserNameModal() {
   const registeredName =useSelector((state:any)=>state.messenger.profile?.name)
   console.log("🚀 ~ file: index.tsx:9 ~ UserNameModal ~ registeredName:", registeredName)
@@ -14,6 +14,11 @@ export default function UserNameModal() {
   const dispatch=useDispatch()
  const handleReceiveUserName=()=>{
     console.log(userName)
+    enum TimerProgressBarStates {
+        timer,
+        // Add other possible states here if needed
+      }
+      
     if(userName!==""){
         dispatch(setProfile(userName))
         let timerInterval: NodeJS.Timeout;
